@@ -66,3 +66,6 @@ INSERT INTO bank_transaction (account_no, transaction_date, transaction_details,
 VALUES (567890, DATE '2023-07-02', 'Utility Bill', NULL, DATE '2023-07-02', 180.00, NULL, 1020.00);
 
 select * from BANK_TRANSACTION;
+
+select * from BANK_TRANSACTION 
+where ACCOUNT_NO = 123456;
