@@ -1,1 +1,1 @@
-delete table bank_transaction;
+select * from bank_transactions;
