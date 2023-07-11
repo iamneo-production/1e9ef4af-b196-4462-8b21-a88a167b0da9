@@ -1,7 +1,6 @@
 select * 
 from BANK_TRANSACTION;
-
-
+/* query to find 5th highest withdrawal each year */
 SELECT distinct(year), withdrawal_amt
 FROM (
   SELECT EXTRACT(YEAR FROM "DATE") AS year, 
