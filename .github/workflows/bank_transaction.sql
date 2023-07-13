@@ -74,4 +74,7 @@ FROM bank_transaction
 GROUP BY EXTRACT(YEAR FROM "DATE")
 order by year;
 
-
+-- Query to count number of transactions for each account number
+SELECT ACCOUNT_NO, COUNT(*) AS transaction_count
+FROM BANK_TRANSACTION
+GROUP BY ACCOUNT_NO; 
