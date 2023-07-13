@@ -53,7 +53,11 @@ FROM (
 )
 WHERE rn <= 5;
 
+-- Query to fetch distinct account numbers
+SELECT DISTINCT ACCOUNT_NO FROM BANK_TRANSACTION; 
 
+-- Query to count total number of transactions
+SELECT COUNT(*) AS total_transactions FROM BANK_TRANSACTION; 
 
 
 
