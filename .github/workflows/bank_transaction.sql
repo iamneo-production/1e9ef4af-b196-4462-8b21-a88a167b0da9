@@ -59,6 +59,12 @@ SELECT DISTINCT ACCOUNT_NO FROM BANK_TRANSACTION;
 -- Query to count total number of transactions
 SELECT COUNT(*) AS total_transactions FROM BANK_TRANSACTION; 
 
+/* Query to find Highest Amount deposit each year */
+SELECT EXTRACT(YEAR FROM "DATE") AS year, 
+       MAX(CAST(DEPOSIT_AMT AS NUMBER(10, 2) DEFAULT NULL ON CONVERSION ERROR)) AS highest_deposited_amount
+FROM bank_transaction
+GROUP BY EXTRACT(YEAR FROM "DATE")
+order by year;
 
 
 
