@@ -4,6 +4,9 @@ select *
 from BANK_TRANSACTION; 
 DESCRIBE BANK_TRANSACTION;
 
+/* Describe Table */ 
+DESC BANK_TRANSACTION;
+
 /* query to find 5th highest withdrawal each year */
 SELECT distinct(year), withdrawal_amt
 FROM (
