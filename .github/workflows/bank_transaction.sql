@@ -157,3 +157,126 @@ INSERT ALL
 SELECT 1 FROM DUAL;
 
 select * from Customer;
+
+/*Creating table for account */
+CREATE TABLE Account (
+  id NUMBER,
+  customer_id NUMBER,
+  card_id NUMBER,
+  balance VARCHAR2(50),
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES Customer(id),
+  FOREIGN KEY (card_id) REFERENCES Card(id)
+);
+
+/*Inserting values into account table */
+INSERT ALL
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (1, 1, 101, '1000.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (2, 2, 102, '500.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (3, 3, 103, '2500.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (4, 4, 104, '1500.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (5, 5, 105, '2000.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (6, 6, 106, '3000.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (7, 7, 107, '750.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (8, 8, 108, '1200.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (9, 9, 109, '2200.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (10, 10, 110, '1800.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (11, 11, 111, '3000.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (12, 12, 112, '2500.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (13, 13, 113, '1200.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (14, 14, 114, '2800.00')
+  INTO account (id, customer_id, card_id, balance)
+  VALUES (15, 15, 115, '3500.00')
+SELECT 1 FROM DUAL;
+
+
+/* Creating table for Card */
+CREATE TABLE Card (
+  id NUMBER,
+  cardnumber VARCHAR2(16),
+  expiration_date DATE,
+  is_blocked NUMBER(1,0),
+  PRIMARY KEY (id)
+);
+
+/*Inserting vakues into Card */
+INSERT ALL
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (101, '1111222233334444', TO_DATE('2025-12-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (102, '2222333344445555', TO_DATE('2024-10-31', 'YYYY-MM-DD'), 1)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (103, '3333444455556666', TO_DATE('2023-09-30', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (104, '4444555566667777', TO_DATE('2025-05-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (105, '5555666677778888', TO_DATE('2024-12-31', 'YYYY-MM-DD'), 1)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (106, '6666777788889999', TO_DATE('2025-11-30', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (107, '7777888899990000', TO_DATE('2023-10-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (108, '8888999900001111', TO_DATE('2024-06-30', 'YYYY-MM-DD'), 1)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (109, '9999000011112222', TO_DATE('2025-08-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (110, '1234123412341234', TO_DATE('2024-09-30', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (111, '2345234523452345', TO_DATE('2025-11-30', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (112, '3456345634563456', TO_DATE('2023-12-31', 'YYYY-MM-DD'), 1)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (113, '4567456745674567', TO_DATE('2025-01-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (114, '5678567856785678', TO_DATE('2023-07-31', 'YYYY-MM-DD'), 0)
+  INTO card (id, cardnumber, expiration_date, is_blocked)
+  VALUES (115, '6789678967896789', TO_DATE('2024-02-28', 'YYYY-MM-DD'), 1)
+SELECT 1 FROM DUAL;
+
+/*Creating table for Transaction */
+CREATE TABLE Transaction (
+  id NUMBER,
+  account_id NUMBER,
+  description VARCHAR2(255),
+  amount NUMBER,
+  tdate DATE,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
+/*Creating table for Loan_Type */
+CREATE TABLE Loan_Type (
+  id NUMBER,
+  type VARCHAR2(50),
+  description VARCHAR2(255),
+  base_amount DECIMAL(10,0),
+  base_interest_rate DECIMAL(10,0),
+  PRIMARY KEY (id)
+);
+
+/*Creating table for Loan */
+CREATE TABLE Loan (
+  id NUMBER,
+  account_id NUMBER,
+  loan_type_id NUMBER,
+  amount_paid DECIMAL(10,0),
+  start_date DATE,
+  due_date DATE,
+  PRIMARY KEY (id),
+  FOREIGN KEY (account_id) REFERENCES Account(id),
+  FOREIGN KEY (loan_type_id) REFERENCES Loan_Type(id)
+);
