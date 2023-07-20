@@ -451,3 +451,10 @@ LEFT JOIN loan_type lt ON l.loan_type_id = lt.id;
 SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
 FROM loan l
 RIGHT JOIN loan_type lt ON l.loan_type_id = lt.id;
+
+--Full outer join between loan and loan_type tables to get all loans and their loan types, including unmatched records from both tables:
+
+SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
+FROM loan l
+FULL OUTER JOIN loan_type lt ON l.loan_type_id = lt.id;
+
