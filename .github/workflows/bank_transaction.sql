@@ -446,3 +446,8 @@ SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
 FROM loan l
 LEFT JOIN loan_type lt ON l.loan_type_id = lt.id;
 
+--Right join between loan and loan_type tables to get all loan types along with loans (if available):
+
+SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
+FROM loan l
+RIGHT JOIN loan_type lt ON l.loan_type_id = lt.id;
