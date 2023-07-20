@@ -381,3 +381,10 @@ LEFT JOIN customer c ON b.id = c.branch_id;
 SELECT b.name AS branch_name, c.first_name, c.last_name
 FROM branch_table b
 RIGHT JOIN customer c ON b.id = c.branch_id;
+
+--Full outer join between customer and account tables to get all customers and their account details (if any) regardless of the relationship:
+
+SELECT c.first_name, c.last_name, a.balance
+FROM customer c
+FULL OUTER JOIN account a ON c.id = a.customer_id;
+
