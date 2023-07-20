@@ -400,4 +400,8 @@ SELECT a.id AS account_id, a.balance, t.description, t.amount
 FROM account a
 LEFT JOIN transaction t ON a.id = t.account_id;
 
+--Right join between account and transaction tables to get all transactions and their corresponding account (if any):
 
+SELECT a.id AS account_id, a.balance, t.description, t.amount
+FROM account a
+RIGHT JOIN transaction t ON a.id = t.account_id;
