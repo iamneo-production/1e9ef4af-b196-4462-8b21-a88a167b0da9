@@ -426,3 +426,9 @@ FROM customer c
 LEFT JOIN account a ON c.id = a.customer_id
 LEFT JOIN card ca ON a.card_id = ca.id;
 
+--Inner join between branch_table, customer, and account tables to get all accounts and their corresponding branch and customer details:
+
+SELECT b.name AS branch_name, c.first_name, c.last_name, a.balance
+FROM branch_table b
+INNER JOIN customer c ON b.id = c.branch_id
+INNER JOIN account a ON c.id = a.customer_id;
