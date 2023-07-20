@@ -405,3 +405,9 @@ LEFT JOIN transaction t ON a.id = t.account_id;
 SELECT a.id AS account_id, a.balance, t.description, t.amount
 FROM account a
 RIGHT JOIN transaction t ON a.id = t.account_id;
+
+--Full outer join between account and transaction tables to get all accounts and their transactions, including unmatched records from both tables:
+
+SELECT a.id AS account_id, a.balance, t.description, t.amount
+FROM account a
+FULL OUTER JOIN transaction t ON a.id = t.account_id;
