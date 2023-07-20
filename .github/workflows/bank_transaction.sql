@@ -471,3 +471,12 @@ SELECT a.id AS account_id, a.balance, t.description, t.amount, ca.cardnumber
 FROM account a
 LEFT JOIN transaction t ON a.id = t.account_id
 LEFT JOIN card ca ON a.card_id = ca.id;
+
+--Inner join between customer, account, transaction, and loan tables to get customers who have both accounts and loans, along with their transactions:
+
+SELECT c.first_name, c.last_name, a.id AS account_id, a.balance, t.description, t.amount
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN transaction t ON a.id = t.account_id
+INNER JOIN loan l ON a.id = l.account_id;
+
