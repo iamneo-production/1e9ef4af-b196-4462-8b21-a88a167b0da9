@@ -363,3 +363,11 @@ INSERT ALL
   INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
   VALUES (15, 15, 5, 7000, TO_DATE('2023-07-01', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
 SELECT 1 FROM DUAL;
+
+--Inner join between customer and account tables to get account details of customers:
+
+SELECT c.first_name, c.last_name, a.balance
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id;
+
+
