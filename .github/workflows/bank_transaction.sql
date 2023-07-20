@@ -370,4 +370,10 @@ SELECT c.first_name, c.last_name, a.balance
 FROM customer c
 INNER JOIN account a ON c.id = a.customer_id;
 
+--Left join between branch_table and customer tables to get all branches and customers (if any) associated with each branch:
+
+SELECT b.name AS branch_name, c.first_name, c.last_name
+FROM branch_table b
+LEFT JOIN customer c ON b.id = c.branch_id;
+
 
