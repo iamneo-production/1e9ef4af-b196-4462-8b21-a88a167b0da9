@@ -432,3 +432,10 @@ SELECT b.name AS branch_name, c.first_name, c.last_name, a.balance
 FROM branch_table b
 INNER JOIN customer c ON b.id = c.branch_id
 INNER JOIN account a ON c.id = a.customer_id;
+
+--Inner join between customer, account, and loan tables to get customers who have both accounts and loans:
+
+SELECT c.first_name, c.last_name
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN loan l ON a.id = l.account_id;
