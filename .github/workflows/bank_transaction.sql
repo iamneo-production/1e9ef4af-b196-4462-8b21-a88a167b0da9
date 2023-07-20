@@ -418,3 +418,11 @@ SELECT c.first_name, c.last_name, a.balance, ca.cardnumber
 FROM customer c
 INNER JOIN account a ON c.id = a.customer_id
 INNER JOIN card ca ON a.card_id = ca.id;
+
+--Left join between customer, account, and card tables to get all customers and their account details, with card information if available:
+
+SELECT c.first_name, c.last_name, a.balance, ca.cardnumber
+FROM customer c
+LEFT JOIN account a ON c.id = a.customer_id
+LEFT JOIN card ca ON a.card_id = ca.id;
+
