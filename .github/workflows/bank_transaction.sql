@@ -388,3 +388,9 @@ SELECT c.first_name, c.last_name, a.balance
 FROM customer c
 FULL OUTER JOIN account a ON c.id = a.customer_id;
 
+--Inner join between customer and loan tables to get loans taken by customers:
+
+SELECT c.first_name, c.last_name, l.amount_paid
+FROM customer c
+INNER JOIN loan l ON c.id = l.account_id;
+
