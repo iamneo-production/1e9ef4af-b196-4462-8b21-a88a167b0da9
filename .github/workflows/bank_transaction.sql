@@ -376,4 +376,8 @@ SELECT b.name AS branch_name, c.first_name, c.last_name
 FROM branch_table b
 LEFT JOIN customer c ON b.id = c.branch_id;
 
+--Right join between branch_table and customer tables to get all customers and their corresponding branch (if any):
 
+SELECT b.name AS branch_name, c.first_name, c.last_name
+FROM branch_table b
+RIGHT JOIN customer c ON b.id = c.branch_id;
