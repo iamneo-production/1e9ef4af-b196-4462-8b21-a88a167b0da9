@@ -302,6 +302,20 @@ CREATE TABLE Loan_Type (
   PRIMARY KEY (id)
 );
 
+-- Insert into loan_type
+INSERT ALL
+  INTO loan_type (id, type, description, base_amount, base_interest_rate)
+  VALUES (1, 'Personal Loan', 'Short-term loan for personal use', 5000, 5.5)
+  INTO loan_type (id, type, description, base_amount, base_interest_rate)
+  VALUES (2, 'Home Loan', 'Loan for purchasing a house', 200000, 3.75)
+  INTO loan_type (id, type, description, base_amount, base_interest_rate)
+  VALUES (3, 'Auto Loan', 'Loan for purchasing a car', 30000, 4.25)
+  INTO loan_type (id, type, description, base_amount, base_interest_rate)
+  VALUES (4, 'Education Loan', 'Loan for educational expenses', 10000, 6.0)
+  INTO loan_type (id, type, description, base_amount, base_interest_rate)
+  VALUES (5, 'Business Loan', 'Loan for financing a business', 50000, 7.5)
+SELECT 1 FROM DUAL;
+
 /*Creating table for Loan */
 CREATE TABLE Loan (
   id NUMBER,
