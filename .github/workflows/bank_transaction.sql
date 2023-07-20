@@ -328,3 +328,38 @@ CREATE TABLE Loan (
   FOREIGN KEY (account_id) REFERENCES Account(id),
   FOREIGN KEY (loan_type_id) REFERENCES Loan_Type(id)
 );
+
+
+-- Insert into loan
+INSERT ALL
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (1, 1, 1, 1000, TO_DATE('2023-07-01', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (2, 2, 2, 20000, TO_DATE('2023-07-02', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (3, 3, 3, 15000, TO_DATE('2023-07-05', 'YYYY-MM-DD'), TO_DATE('2024-03-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (4, 4, 4, 5000, TO_DATE('2023-07-10', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (5, 5, 5, 10000, TO_DATE('2023-07-15', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (6, 6, 1, 500, TO_DATE('2023-07-20', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (7, 7, 2, 10000, TO_DATE('2023-07-25', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (8, 8, 3, 8000, TO_DATE('2023-07-01', 'YYYY-MM-DD'), TO_DATE('2024-03-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (9, 9, 4, 3000, TO_DATE('2023-07-02', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (10, 10, 5, 5000, TO_DATE('2023-07-05', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (11, 11, 1, 100, TO_DATE('2023-07-10', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (12, 12, 2, 15000, TO_DATE('2023-07-15', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (13, 13, 3, 12000, TO_DATE('2023-07-20', 'YYYY-MM-DD'), TO_DATE('2024-03-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (14, 14, 4, 4000, TO_DATE('2023-07-25', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'))
+  INTO loan (id, account_id, loan_type_id, amount_paid, start_date, due_date)
+  VALUES (15, 15, 5, 7000, TO_DATE('2023-07-01', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'))
+SELECT 1 FROM DUAL;
