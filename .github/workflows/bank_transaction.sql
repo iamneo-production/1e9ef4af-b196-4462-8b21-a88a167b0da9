@@ -458,3 +458,9 @@ SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
 FROM loan l
 FULL OUTER JOIN loan_type lt ON l.loan_type_id = lt.id;
 
+--Inner join between account, transaction, and card tables to get transactions associated with each account and their card information:
+
+SELECT a.id AS account_id, a.balance, t.description, t.amount, ca.cardnumber
+FROM account a
+INNER JOIN transaction t ON a.id = t.account_id
+INNER JOIN card ca ON a.card_id = ca.id;
