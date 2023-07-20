@@ -480,3 +480,12 @@ INNER JOIN account a ON c.id = a.customer_id
 INNER JOIN transaction t ON a.id = t.account_id
 INNER JOIN loan l ON a.id = l.account_id;
 
+--Left join between branch_table, customer, account, and transaction tables to get all customers and their transactions, along with their branch information:
+
+SELECT b.name AS branch_name, c.first_name, c.last_name, t.description, t.amount
+FROM branch_table b
+LEFT JOIN customer c ON b.id = c.branch_id
+LEFT JOIN account a ON c.id = a.customer_id
+LEFT JOIN transaction t ON a.id = t.account_id;
+
+
