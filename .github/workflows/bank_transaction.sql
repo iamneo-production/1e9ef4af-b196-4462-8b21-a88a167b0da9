@@ -439,3 +439,10 @@ SELECT c.first_name, c.last_name
 FROM customer c
 INNER JOIN account a ON c.id = a.customer_id
 INNER JOIN loan l ON a.id = l.account_id;
+
+--Left join between loan and loan_type tables to get all loans along with their loan types (if available):
+
+SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid
+FROM loan l
+LEFT JOIN loan_type lt ON l.loan_type_id = lt.id;
+
