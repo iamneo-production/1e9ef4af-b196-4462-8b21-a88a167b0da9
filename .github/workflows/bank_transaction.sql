@@ -258,6 +258,40 @@ CREATE TABLE Transaction (
   FOREIGN KEY (account_id) REFERENCES Account(id)
 );
 
+-- Insert into transaction
+INSERT ALL
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (1, 1, 'Deposit', '500.00', TO_DATE('2023-07-01', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (2, 1, 'Withdrawal', '200.00', TO_DATE('2023-07-05', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (3, 2, 'Deposit', '1000.00', TO_DATE('2023-07-02', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (4, 2, 'Transfer', '500.00', TO_DATE('2023-07-03', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (5, 3, 'Withdrawal', '300.00', TO_DATE('2023-07-04', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (6, 3, 'Deposit', '800.00', TO_DATE('2023-07-06', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (7, 4, 'Transfer', '100.00', TO_DATE('2023-07-01', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (8, 4, 'Withdrawal', '50.00', TO_DATE('2023-07-02', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (9, 5, 'Deposit', '700.00', TO_DATE('2023-07-03', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (10, 5, 'Withdrawal', '150.00', TO_DATE('2023-07-05', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (11, 6, 'Deposit', '400.00', TO_DATE('2023-07-06', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (12, 6, 'Transfer', '200.00', TO_DATE('2023-07-07', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (13, 7, 'Withdrawal', '80.00', TO_DATE('2023-07-01', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (14, 7, 'Deposit', '300.00', TO_DATE('2023-07-03', 'YYYY-MM-DD'))
+  INTO transaction (id, account_id, description, amount, tdate)
+  VALUES (15, 8, 'Transfer', '100.00', TO_DATE('2023-07-06', 'YYYY-MM-DD'))
+SELECT 1 FROM DUAL;
+
 /*Creating table for Loan_Type */
 CREATE TABLE Loan_Type (
   id NUMBER,
