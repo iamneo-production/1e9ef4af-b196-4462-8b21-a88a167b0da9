@@ -394,3 +394,10 @@ SELECT c.first_name, c.last_name, l.amount_paid
 FROM customer c
 INNER JOIN loan l ON c.id = l.account_id;
 
+--Left join between account and transaction tables to get all accounts and their transactions (if any):
+
+SELECT a.id AS account_id, a.balance, t.description, t.amount
+FROM account a
+LEFT JOIN transaction t ON a.id = t.account_id;
+
+
