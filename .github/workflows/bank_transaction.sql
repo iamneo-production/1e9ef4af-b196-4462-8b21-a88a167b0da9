@@ -464,3 +464,10 @@ SELECT a.id AS account_id, a.balance, t.description, t.amount, ca.cardnumber
 FROM account a
 INNER JOIN transaction t ON a.id = t.account_id
 INNER JOIN card ca ON a.card_id = ca.id;
+
+-- Left join between account, transaction, and card tables to get all accounts and their transactions, with card information if available:
+
+SELECT a.id AS account_id, a.balance, t.description, t.amount, ca.cardnumber
+FROM account a
+LEFT JOIN transaction t ON a.id = t.account_id
+LEFT JOIN card ca ON a.card_id = ca.id;
