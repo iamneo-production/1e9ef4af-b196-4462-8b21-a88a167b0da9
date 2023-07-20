@@ -411,3 +411,10 @@ RIGHT JOIN transaction t ON a.id = t.account_id;
 SELECT a.id AS account_id, a.balance, t.description, t.amount
 FROM account a
 FULL OUTER JOIN transaction t ON a.id = t.account_id;
+
+--Inner join between customer, account, and card tables to get account details along with card information for each customer:
+
+SELECT c.first_name, c.last_name, a.balance, ca.cardnumber
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN card ca ON a.card_id = ca.id;
