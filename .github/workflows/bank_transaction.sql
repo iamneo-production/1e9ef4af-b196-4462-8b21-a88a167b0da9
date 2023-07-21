@@ -8,30 +8,64 @@ DESCRIBE BANK_TRANSACTION;
 DESC BANK_TRANSACTION;
 
 /* query to find 5th highest withdrawal each year */
-SELECT distinct(year), withdrawal_amt
-FROM (
-  SELECT EXTRACT(YEAR FROM "DATE") AS year, 
-         TO_NUMBER(REGEXP_REPLACE(WITHDRAWAL_AMT, '[^0-9.]', '')) AS withdrawal_amt,
-         DENSE_RANK() OVER (PARTITION BY EXTRACT(YEAR FROM "DATE") 
-                            ORDER BY TO_NUMBER(REGEXP_REPLACE(WITHDRAWAL_AMT, '[^0-9.]', '')) DESC) AS rn
-  FROM bank_transaction
-) subquery
-WHERE rn = 5
-order by year;
+WITH ranked_transactions AS (
+  SELECT
+    EXTRACT(YEAR FROM "DATE") AS year,
+    TO_NUMBER(REGEXP_REPLACE("WITHDRAWAL_AMT", '[^0-9.]', '')) AS withdrawal_amount,
+    DENSE_RANK() OVER (PARTITION BY EXTRACT(YEAR FROM "DATE") ORDER BY TO_NUMBER(REGEXP_REPLACE("WITHDRAWAL_AMT", '[^0-9.]', '')) DESC) AS rnk
+  FROM
+    bank_transaction
+)
+SELECT
+  distinct(year),
+  withdrawal_amount AS fifth_highest_withdrawal_amount
+FROM
+  ranked_transactions
+WHERE
+  rnk = 5
+ORDER BY
+  year;
+
 
 /* Query to find Highest Amount debited each year */
-SELECT EXTRACT(YEAR FROM "DATE") AS year, 
-       MAX(CAST(WITHDRAWAL_AMT AS NUMBER(10, 2) DEFAULT NULL ON CONVERSION ERROR)) AS highest_debited_amount
-FROM bank_transaction
-GROUP BY EXTRACT(YEAR FROM "DATE")
-order by year;
+
+WITH highest_debited AS (
+  SELECT
+    EXTRACT(YEAR FROM "DATE") AS year,
+    MAX(TO_NUMBER(REGEXP_REPLACE("WITHDRAWAL_AMT", '[^0-9.]', ''))) AS highest_debited_amount
+  FROM
+    bank_transaction
+  GROUP BY
+    EXTRACT(YEAR FROM "DATE")
+)
+SELECT
+  year,
+  highest_debited_amount
+FROM
+  highest_debited
+ORDER BY
+  year;
+
 
 /* Query to find Lowest Amount debited each year */ 
-SELECT EXTRACT(YEAR FROM "DATE") AS year, 
-       MIN(CAST(WITHDRAWAL_AMT AS NUMBER(10, 2) DEFAULT NULL ON CONVERSION ERROR)) AS lowest_debited_amount
-FROM bank_transaction
-GROUP BY EXTRACT(YEAR FROM "DATE")
-order by year;
+
+WITH lowest_debited AS (
+  SELECT
+    EXTRACT(YEAR FROM "DATE") AS year,
+    MIN(TO_NUMBER(REGEXP_REPLACE("WITHDRAWAL_AMT", '[^0-9.]', ''))) AS lowest_debited_amount
+  FROM
+    bank_transaction
+  GROUP BY
+    EXTRACT(YEAR FROM "DATE")
+)
+SELECT
+  year,
+  lowest_debited_amount
+FROM
+  lowest_debited
+ORDER BY
+  year;
+
 
 /* Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 */
 SELECT COUNT(*) AS withdrawal_count
@@ -40,7 +74,7 @@ WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
   AND "DATE" <= TO_DATE('07-Mar-19', 'dd-Mon-yy')
   AND WITHDRAWAL_AMT IS NOT NULL;
 
-/* Quert to find the first five Largest Transaction Occured in 2018 */
+/* Query to find the first five Largest Transaction Occured in 2018 */
 SELECT *
 FROM (
   SELECT bank_transaction.*,
