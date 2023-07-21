@@ -25,13 +25,3 @@ and regexp_like(replace(WITHDRAWAL_AMT,' ',''),'^[0-9]+(\.[0-9]+)?$')
 order by to_number(replace(WITHDRAWAL_AMT,'''','')) desc
 offset 0 rows fetch next 5 rows only;
 /*query to find the 5 highest withdrawal each year*/
-select distinct(year),WITHDRAWAL_AMT from
-(
-     select EXTRACT(year from "DATE") as year,
-     TO_NUMBER(REGEXP_REPLACE(WITHDRAWAL_AMT,'[^0-9.]','')) as withdrawal_amt,
-     dense_rank() over(partition by extract(year from "DATE")
-     order by to_number(regexp_replace(WITHDRAWAL_AMT,'[^0-9.]',''))desc) as rn
-     from BANK_TRANSACTION
-)subquery
-where rn=5
-order by year;
