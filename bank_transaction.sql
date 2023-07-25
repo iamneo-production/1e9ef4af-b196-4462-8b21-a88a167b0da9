@@ -1,2 +1,6 @@
-select extract(year from transaction_date)year,max(withdrawal_amt)as highest_debited_amount from BANK_TRANSACTION group by EXTRACT(year from transaction_date )
-order by extract(year from transaction_date);
+/* QUERY TO FIND HIGHEST AMOUNT DEBITED EACH YEAR */
+
+SELECT EXTRACT(YEAR FROM "DATE") AS YEAR,
+MAX(CAST(WITHDRAWAL_AMT AS NUMBER(10,2)DEFAULT NULL ON CONVERSION ERROR)) AS highest_debited_amount FROM BANK_TRANSACTION
+GROUP BY EXTRACT(YEAR FROM "DATE")
+ORDER BY YEAR;
