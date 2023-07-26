@@ -35,3 +35,12 @@ from(
 )subquery
 where rn=5
 order by year;
+/*trigger*/
+create or replace trigger tran_det
+before insert on BANK_TRANSACTION
+for each row
+begin
+transaction_detail:=lower(TRANSACTION_DETAIL);
+dbms_output.put_line("trigger fired");
+end;
+/
