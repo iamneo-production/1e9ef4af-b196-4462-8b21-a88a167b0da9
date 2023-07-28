@@ -510,4 +510,210 @@ FULL OUTER JOIN account a ON c.id = a.customer_id
 FULL OUTER JOIN transaction t ON a.id = t.account_id;
 
 
+-- Retrieve all customers along with their branch information.
+
+-- Solution
+SELECT c.first_name, c.last_name, c.date_of_birth, c.gender, b.name AS branch_name, b.address
+FROM customer c
+INNER JOIN branch b ON c.branch_id = b.id;
+
+
+-- Get the total number of customers for each branch.
+
+-- Solution
+SELECT b.name AS branch_name, COUNT(c.id) AS customer_count
+FROM branch b
+LEFT JOIN customer c ON b.id = c.branch_id
+GROUP BY b.name;
+
+
+-- List all accounts along with their corresponding customer and branch details.
+
+-- Solution
+SELECT a.id AS account_id, a.balance, c.first_name, c.last_name, b.name AS branch_name
+FROM account a
+INNER JOIN customer c ON a.customer_id = c.id
+INNER JOIN branch b ON c.branch_id = b.id;
+
+-- Retrieve the total balance of all accounts for each customer.
+
+-- Solution
+SELECT c.id AS customer_id, c.first_name, c.last_name, SUM(a.balance) AS total_balance
+FROM customer c
+LEFT JOIN account a ON c.id = a.customer_id
+GROUP BY c.id, c.first_name, c.last_name;
+
+
+-- Get the card details for customers who have a balance greater than 1000.
+
+-- Solution
+SELECT c.first_name, c.last_name, a.balance, ca.cardnumber, ca.expiration_date
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN card ca ON a.card_id = ca.id
+WHERE a.balance > 1000;
+
+
+-- Retrieve the transactions with amounts greater than 100 for a specific account.
+
+-- Solution
+SELECT t.id AS transaction_id, t.description, t.amount, t.tdate
+FROM transaction t
+INNER JOIN account a ON t.account_id = a.id
+WHERE a.id = 1 AND t.amount > 100;
+
+
+-- List all customers who have taken a loan with the loan amount and corresponding loan type.
+
+-- Solution
+SELECT c.first_name, c.last_name, l.amount_paid, lt.type
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN loan l ON a.id = l.account_id
+INNER JOIN loan_type lt ON l.loan_type_id = lt.id;
+
+
+-- Retrieve the loan details and the corresponding loan type for a specific account.
+
+-- Solution
+SELECT l.id AS loan_id, lt.type, lt.description, l.amount_paid, l.start_date, l.due_date
+FROM loan l
+INNER JOIN loan_type lt ON l.loan_type_id = lt.id
+WHERE l.account_id = 1;
+
+-- Get the total amount of all transactions for a specific account.
+
+-- Solution
+SELECT a.id AS account_id, a.balance, SUM(t.amount) AS total_transactions
+FROM account a
+LEFT JOIN transaction t ON a.id = t.account_id
+WHERE a.id = 1
+GROUP BY a.id, a.balance;
+
+
+-- Retrieve the average balance of accounts for each branch.
+
+-- Solution
+SELECT b.name AS branch_name, AVG(a.balance) AS average_balance
+FROM branch b
+LEFT JOIN customer c ON b.id = c.branch_id
+LEFT JOIN account a ON c.id = a.customer_id
+GROUP BY b.name;
+
+-- List all branches along with the total number of customers and their average balance.
+
+-- Solution
+SELECT b.name AS branch_name, COUNT(c.id) AS customer_count, AVG(a.balance) AS average_balance
+FROM branch b
+LEFT JOIN customer c ON b.id = c.branch_id
+LEFT JOIN account a ON c.id = a.customer_id
+GROUP BY b.name;
+
+
+-- Retrieve the accounts and their corresponding card details for a specific customer.
+
+-- Solution
+SELECT a.id AS account_id, a.balance, ca.cardnumber, ca.expiration_date
+FROM account a
+INNER JOIN customer c ON a.customer_id = c.id
+INNER JOIN card ca ON a.card_id = ca.id
+WHERE c.id = 1;
+
+-- Retrieve the transactions and their corresponding account, customer, and branch details.
+
+-- Solution
+SELECT t.id AS transaction_id, t.description, t.amount, t.tdate, a.id AS account_id, a.balance, c.first_name, c.last_name, b.name AS branch_name
+FROM transaction t
+INNER JOIN account a ON t.account_id = a.id
+INNER JOIN customer c ON a.customer_id = c.id
+INNER JOIN branch b ON c.branch_id = b.id;
+
+-- Get the loan details for accounts that have a balance less than 1000.
+
+-- Solution
+SELECT l.id AS loan_id, l.amount_paid, l.start_date, l.due_date
+FROM loan l
+INNER JOIN account a ON l.account_id = a.id
+WHERE a.balance < 1000;
+
+
+-- Retrieve the transactions with the highest amount for each account.
+
+-- Solution
+SELECT t.id AS transaction_id, t.description, t.amount, t.tdate, a.id AS account_id, a.balance
+FROM transaction t
+INNER JOIN account a ON t.account_id = a.id
+WHERE (t.account_id, t.amount) IN (
+    SELECT account_id, MAX(amount) FROM transaction GROUP BY account_id
+);
+
+
+-- List all customers and their loan types for customers who have taken a loan.
+
+-- Solution
+SELECT c.first_name, c.last_name, lt.type
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN loan l ON a.id = l.account_id
+INNER JOIN loan_type lt ON l.loan_type_id = lt.id;
+
+
+
+-- Retrieve the card details for customers whose cards are not blocked.
+
+-- Solution
+SELECT c.first_name, c.last_name, ca.cardnumber, ca.expiration_date
+FROM customer c
+INNER JOIN account a ON c.id = a.customer_id
+INNER JOIN card ca ON a.card_id = ca.id
+WHERE ca.is_blocked = 0;
+
+
+
+-- Get the loan types along with the total amount paid for each loan type.
+
+-- Solution
+SELECT lt.type, SUM(l.amount_paid) AS total_amount_paid
+FROM loan l
+INNER JOIN loan_type lt ON l.loan_type_id = lt.id
+GROUP BY lt.type;
+
+
+-- List all customers who have no accounts.
+
+-- Solution
+SELECT c.first_name, c.last_name
+FROM customer c
+LEFT JOIN account a ON c.id = a.customer_id
+WHERE a.id IS NULL;
+
+
+-- Retrieve the transactions with the earliest date for each account.
+
+-- Solution
+SELECT t.id AS transaction_id, t.description, t.amount, t.tdate, a.id AS account_id, a.balance
+FROM transaction t
+INNER JOIN account a ON t.account_id = a.id
+WHERE (t.account_id, t.tdate) IN (
+    SELECT account_id, MIN(tdate) FROM transaction GROUP BY account_id
+);
+
+
+-- Get the loan details along with the corresponding customer names.
+
+-- Solution
+SELECT l.id AS loan_id, l.amount_paid, l.start_date, l.due_date, c.first_name, c.last_name
+FROM loan l
+INNER JOIN account a ON l.account_id = a.id
+INNER JOIN customer c ON a.customer_id = c.id;
+
+-- Retrieve the account details along with the corresponding branch and customer information.
+
+-- Solution
+SELECT a.id AS account_id, a.balance, b.name AS branch_name, c.first_name, c.last_name
+FROM account a
+INNER JOIN customer c ON a.customer_id = c.id
+INNER JOIN branch b ON c.branch_id = b.id;
+
+
 
