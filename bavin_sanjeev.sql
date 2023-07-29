@@ -1,13 +1,13 @@
 
-/* Retrieve All Records */
+--Retrieve All Records 
 select * 
 from BANK_TRANSACTION; 
 DESCRIBE BANK_TRANSACTION;
 
-/* Describe Table */ 
+--Describe Table 
 DESC BANK_TRANSACTION;
 
-/* Query to find Highest Amount debited each year */
+--Query to find Highest Amount debited each year 
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -16,7 +16,7 @@ SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGH
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE");
 
- /* Query to find Lowest Amount debited each year */ 
+ -- Query to find Lowest Amount debited each year 
 
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -25,7 +25,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE");
 
-/* query to find 5th highest withdrawal each year */
+--query to find 5th highest withdrawal each year 
 WITH processed_transactions AS (
   SELECT
     TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
@@ -54,7 +54,7 @@ WHERE
 ORDER BY
   year;
 
-/* TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
@@ -67,14 +67,14 @@ WHERE
 ORDER BY
   withdrawal_amount DESC;
 
-/* Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 */
+--Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 
 SELECT COUNT(*) AS withdrawal_count
 FROM bank_transaction
 WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy') 
   AND "DATE" <= TO_DATE('07-Mar-19', 'dd-Mon-yy')
   AND WITHDRAWAL_AMT IS NOT NULL;
 
-/* Query to find the first five Largest Transaction Occured in 2018 */
+--Query to find the first five Largest Transaction Occured in 2018 
 
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
@@ -171,7 +171,7 @@ SELECT 1 FROM DUAL;
 
 select * from Customer;
 
-/*Creating table for account */
+--Creating table for account 
 CREATE TABLE Account (
   id NUMBER,
   customer_id NUMBER,
@@ -182,7 +182,7 @@ CREATE TABLE Account (
   FOREIGN KEY (card_id) REFERENCES Card(id)
 );
 
-/*Inserting values into account table */
+--Inserting values into account table 
 INSERT ALL
   INTO account (id, customer_id, card_id, balance)
   VALUES (1, 1, 101, '1000.00')
@@ -217,7 +217,7 @@ INSERT ALL
 SELECT 1 FROM DUAL;
 
 
-/* Creating table for Card */
+--Creating table for Card 
 CREATE TABLE Card (
   id NUMBER,
   cardnumber VARCHAR2(16),
@@ -226,7 +226,7 @@ CREATE TABLE Card (
   PRIMARY KEY (id)
 );
 
-/*Inserting vakues into Card */
+--Inserting vakues into Card 
 INSERT ALL
   INTO card (id, cardnumber, expiration_date, is_blocked)
   VALUES (101, '1111222233334444', TO_DATE('2025-12-31', 'YYYY-MM-DD'), 0)
@@ -260,7 +260,7 @@ INSERT ALL
   VALUES (115, '6789678967896789', TO_DATE('2024-02-28', 'YYYY-MM-DD'), 1)
 SELECT 1 FROM DUAL;
 
-/*Creating table for Transaction */
+--Creating table for Transaction 
 CREATE TABLE Transaction (
   id NUMBER,
   account_id NUMBER,
@@ -305,7 +305,7 @@ INSERT ALL
   VALUES (15, 8, 'Transfer', '100.00', TO_DATE('2023-07-06', 'YYYY-MM-DD'))
 SELECT 1 FROM DUAL;
 
-/*Creating table for Loan_Type */
+--Creating table for Loan_Type 
 CREATE TABLE Loan_Type (
   id NUMBER,
   type VARCHAR2(50),
@@ -329,7 +329,7 @@ INSERT ALL
   VALUES (5, 'Business Loan', 'Loan for financing a business', 50000, 7.5)
 SELECT 1 FROM DUAL;
 
-/*Creating table for Loan */
+--Creating table for Loan 
 CREATE TABLE Loan (
   id NUMBER,
   account_id NUMBER,
