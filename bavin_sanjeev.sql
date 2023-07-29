@@ -7,11 +7,15 @@ DESCRIBE BANK_TRANSACTION;
 --Describe Table 
 DESC BANK_TRANSACTION;
 
+CREATE OR REPLACE PACKAGE my_constants_pkg AS
+  v_regex_pattern CONSTANT VARCHAR2(100) := '^[0-9]+(\.[0-9]+)?$';
+END my_constants_pkg;
+/
 
 --Query to find Highest Amount debited each year 
 
 DEFINE v_regex_pattern = '^[0-9]+(\.[0-9]+)?$';
-
+v_regex_pattern CONSTANT VARCHAR2(100) := '^[0-9]+(\.[0-9]+)?$';
 -- Use the constant in the query
 SELECT
   MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT,
@@ -20,7 +24,7 @@ FROM
   BANK_TRANSACTION
 WHERE
   WITHDRAWAL_AMT IS NOT NULL
-  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '&v_regex_pattern')
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), my_constants_pkg.v_regex_pattern)
 GROUP BY
   EXTRACT(YEAR FROM "DATE")
 ORDER BY
@@ -32,7 +36,7 @@ ORDER BY
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL
- AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '&v_regex_pattern')
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), my_constants_pkg.v_regex_pattern)
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
@@ -45,7 +49,7 @@ WITH processed_transactions AS (
     BANK_TRANSACTION
   WHERE
     WITHDRAWAL_AMT IS NOT NULL
-    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '&v_regex_pattern')
+    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), my_constants_pkg.v_regex_pattern)
 ),
 ranked_transactions AS (
   SELECT
@@ -74,7 +78,7 @@ FROM
 WHERE
   EXTRACT(YEAR FROM "DATE") = 2018
   AND WITHDRAWAL_AMT IS NOT NULL
-  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '&v_regex_pattern')
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), my_constants_pkg.v_regex_pattern)
 ORDER BY
   withdrawal_amount DESC;
 
@@ -90,7 +94,7 @@ WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL AND EXTRACT(YEAR FROM "DATE")=2018
- AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '&v_regex_pattern')
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), my_constants_pkg.v_regex_pattern)
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
