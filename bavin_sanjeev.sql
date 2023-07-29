@@ -513,14 +513,6 @@ LEFT JOIN customer c ON b.id = c.branch_id
 LEFT JOIN account a ON c.id = a.customer_id
 LEFT JOIN transaction t ON a.id = t.account_id;
 
---Full outer join between branch_table, customer, account, and transaction tables to get all branches, customers, accounts, and transactions, including unmatched records from all tables:
-
-SELECT b.name AS branch_name, c.first_name, c.last_name, a.id AS account_id, a.balance, t.description, t.amount
-FROM branch_table b
-FULL OUTER JOIN customer c ON b.id = c.branch_id
-FULL OUTER JOIN account a ON c.id = a.customer_id
-FULL OUTER JOIN transaction t ON a.id = t.account_id;
-
 
 -- Retrieve all customers along with their branch information.
 
