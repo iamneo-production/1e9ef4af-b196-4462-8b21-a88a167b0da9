@@ -113,8 +113,7 @@ CREATE TABLE branch_table(
   address VARCHAR2(50),
   PRIMARY KEY (id)
 );
---Select Statement
-select * from branch_table;
+
 
 -- Inserting values in branch_table 
 INSERT ALL
@@ -135,6 +134,22 @@ INSERT ALL
   INTO branch_table (id, name, address) VALUES (15, 'Parkside Branch', '543 Park Lane, City O')
 SELECT 1 FROM DUAL;
 
+CREATE OR REPLACE PACKAGE my_date_format_pkg AS
+  -- Function to return the date format constant
+  FUNCTION get_date_format RETURN VARCHAR2;
+END my_date_format_pkg;
+/
+
+CREATE OR REPLACE PACKAGE BODY my_date_format_pkg AS
+  -- Implementation of the function to return the date format constant
+  FUNCTION get_date_format RETURN VARCHAR2 IS
+  BEGIN
+    RETURN 'YYYY-MM-DD';
+  END;
+END my_date_format_pkg;
+/
+
+
 --Creating a  Customer table 
 CREATE TABLE Customer (
   id NUMBER,
@@ -150,38 +165,37 @@ CREATE TABLE Customer (
 
 INSERT ALL
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (1, 1, 'John', 'Doe', TO_DATE('1980-01-01', 'YYYY-MM-DD'), 'Male')
+  VALUES (1, 1, 'John', 'Doe', TO_DATE('1980-01-01', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (2, 1, 'Jane', 'Smith', TO_DATE('1992-05-15', 'YYYY-MM-DD'), 'Female')
+  VALUES (2, 1, 'Jane', 'Smith', TO_DATE('1992-05-15', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (3, 2, 'Michael', 'Johnson', TO_DATE('1975-09-21', 'YYYY-MM-DD'), 'Male')
+  VALUES (3, 2, 'Michael', 'Johnson', TO_DATE('1975-09-21', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (4, 2, 'Emily', 'Davis', TO_DATE('1988-12-10', 'YYYY-MM-DD'), 'Female')
+  VALUES (4, 2, 'Emily', 'Davis', TO_DATE('1988-12-10', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (5, 3, 'Daniel', 'Wilson', TO_DATE('1995-07-08', 'YYYY-MM-DD'), 'Male')
+  VALUES (5, 3, 'Daniel', 'Wilson', TO_DATE('1995-07-08', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (6, 3, 'Olivia', 'Thomas', TO_DATE('1982-03-25', 'YYYY-MM-DD'), 'Female')
+  VALUES (6, 3, 'Olivia', 'Thomas', TO_DATE('1982-03-25', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (7, 4, 'Matthew', 'Lee', TO_DATE('1990-09-18', 'YYYY-MM-DD'), 'Male')
+  VALUES (7, 4, 'Matthew', 'Lee', TO_DATE('1990-09-18', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (8, 4, 'Sophia', 'Harris', TO_DATE('1985-06-12', 'YYYY-MM-DD'), 'Female')
+  VALUES (8, 4, 'Sophia', 'Harris', TO_DATE('1985-06-12', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (9, 5, 'William', 'Martin', TO_DATE('1979-02-14', 'YYYY-MM-DD'), 'Male')
+  VALUES (9, 5, 'William', 'Martin', TO_DATE('1979-02-14', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (10, 5, 'Ava', 'Clark', TO_DATE('1993-11-07', 'YYYY-MM-DD'), 'Female')
+  VALUES (10, 5, 'Ava', 'Clark', TO_DATE('1993-11-07', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (11, 6, 'James', 'Walker', TO_DATE('1984-08-22', 'YYYY-MM-DD'), 'Male')
+  VALUES (11, 6, 'James', 'Walker', TO_DATE('1984-08-22', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (12, 6, 'Mia', 'Anderson', TO_DATE('1997-04-29', 'YYYY-MM-DD'), 'Female')
+  VALUES (12, 6, 'Mia', 'Anderson', TO_DATE('1997-04-29', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (13, 7, 'Benjamin', 'Lopez', TO_DATE('1986-12-03', 'YYYY-MM-DD'), 'Male')
+  VALUES (13, 7, 'Benjamin', 'Lopez', TO_DATE('1986-12-03', my_date_format_pkg.get_date_format), 'Male')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (14, 7, 'Charlotte', 'Gonzalez', TO_DATE('1991-03-16', 'YYYY-MM-DD'), 'Female')
+  VALUES (14, 7, 'Charlotte', 'Gonzalez', TO_DATE('1991-03-16', my_date_format_pkg.get_date_format), 'Female')
   INTO Customer (id, branch_id, first_name, last_name, date_of_birth, gender)
-  VALUES (15, 8, 'Henry', 'Martinez', TO_DATE('1978-10-27', 'YYYY-MM-DD'), 'Male')
+  VALUES (15, 8, 'Henry', 'Martinez', TO_DATE('1978-10-27', my_date_format_pkg.get_date_format), 'Male')
 SELECT 1 FROM DUAL;
 
-select * from Customer;
 
 --Creating table for account 
 CREATE TABLE Account (
@@ -407,11 +421,6 @@ SELECT b.name AS branch_name, c.first_name, c.last_name
 FROM branch_table b
 RIGHT JOIN customer c ON b.id = c.branch_id;
 
---Full outer join between customer and account tables to get all customers and their account details (if any) regardless of the relationship:
-
-SELECT c.first_name, c.last_name, a.balance
-FROM customer c
-FULL OUTER JOIN account a ON c.id = a.customer_id;
 
 --Inner join between customer and loan tables to get loans taken by customers:
 
@@ -431,11 +440,7 @@ SELECT a.id AS account_id, a.balance, t.description, t.amount
 FROM account a
 RIGHT JOIN transaction t ON a.id = t.account_id;
 
---Full outer join between account and transaction tables to get all accounts and their transactions, including unmatched records from both tables:
 
-SELECT a.id AS account_id, a.balance, t.description, t.amount
-FROM account a
-FULL OUTER JOIN transaction t ON a.id = t.account_id;
 
 --Inner join between customer, account, and card tables to get account details along with card information for each customer:
 
