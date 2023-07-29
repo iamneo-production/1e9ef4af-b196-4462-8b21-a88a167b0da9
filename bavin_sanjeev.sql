@@ -14,7 +14,7 @@ SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGH
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  GROUP BY EXTRACT(YEAR FROM "DATE") 
- ORDER BY EXTRACT(YEAR FROM "DATE");
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
  -- Query to find Lowest Amount debited each year 
 
@@ -23,7 +23,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  GROUP BY EXTRACT(YEAR FROM "DATE") 
- ORDER BY EXTRACT(YEAR FROM "DATE");
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
 --query to find 5th highest withdrawal each year 
 WITH processed_transactions AS (
@@ -52,7 +52,7 @@ FROM
 WHERE
   rnk = 5
 ORDER BY
-  year;
+  year asc;
 
 --TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
 SELECT
@@ -92,19 +92,18 @@ SELECT ACCOUNT_NO, COUNT(*) AS transaction_count
 FROM BANK_TRANSACTION
 GROUP BY ACCOUNT_NO; 
 
-/* Proceeding as per SRS Document */
-/* Creating a  branch_table */
+-- Proceeding as per SRS Document 
+--Creating a  branch_table 
 CREATE TABLE branch_table(
   id NUMBER,
   name VARCHAR2(50),
   address VARCHAR2(50),
   PRIMARY KEY (id)
 );
-
-/*Select Statement */
+--Select Statement
 select * from branch_table;
 
-/* Inserting values in branch_table */
+-- Inserting values in branch_table 
 INSERT ALL
   INTO branch_table (id, name, address) VALUES (1, 'Central Branch', '123 Main Street, City A')
   INTO branch_table (id, name, address) VALUES (2, 'North Branch', '456 Park Avenue, City B')
@@ -123,7 +122,7 @@ INSERT ALL
   INTO branch_table (id, name, address) VALUES (15, 'Parkside Branch', '543 Park Lane, City O')
 SELECT 1 FROM DUAL;
 
-/* Creating a  Customer table */
+--Creating a  Customer table 
 CREATE TABLE Customer (
   id NUMBER,
   branch_id NUMBER,
