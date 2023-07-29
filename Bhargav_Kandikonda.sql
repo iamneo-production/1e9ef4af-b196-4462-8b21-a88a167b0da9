@@ -1,6 +1,7 @@
 /*query to find highest amount debited each year*/
 select EXTRACT( year from "DATE") as year,
-max(cast(WITHDRAWAL_AMT as NUMBER(10,2) default null on conversion error)) as highest_debited_amount
+max(cast(WITHDRAWAL_AMT as NUMBE
+R(10,2) default null on conversion error)) as highest_debited_amount
 from BANK_TRANSACTION
 group by EXTRACT(year from "DATE")
 order by year;
