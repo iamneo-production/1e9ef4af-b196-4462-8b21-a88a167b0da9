@@ -35,14 +35,3 @@ from(
 )subquery
 where rn=5
 order by year;
-select * from BANK_TRANSACTION;
-/*trigger*/
-create or replace trigger namef
-after insert on BANK_TRANSACTION
-for each row
-begin
-dbms_output.put_line("trigger fired");
-end;
-/
-insert into BANK_TRANSACTION values(50,'17-12-21','international FUNDS',18-12-21,400,450,0,50);
-desc BANK_TRANSACTION;
