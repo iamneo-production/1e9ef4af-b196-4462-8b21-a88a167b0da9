@@ -14,8 +14,6 @@ END my_constants_pkg;
 
 --Query to find Highest Amount debited each year 
 
-DEFINE v_regex_pattern = '^[0-9]+(\.[0-9]+)?$';
-v_regex_pattern CONSTANT VARCHAR2(100) := '^[0-9]+(\.[0-9]+)?$';
 -- Use the constant in the query
 SELECT
   MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT,
