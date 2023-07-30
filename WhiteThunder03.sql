@@ -3,16 +3,23 @@ select *
 from BANK_TRANSACTION;
 
 --Querry to find the highest debited each year
-select extract(year from "DATE") as year,max(cast(withdrawal_amt as number(10,2) default null on conversion error)) as highest_debited_amount
-from BANK_TRANSACTION
-group by extract(year from "DATE")
-order by year;
+
+SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
+ EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
+ WHERE WITHDRAWAL_AMT IS NOT NULL
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ GROUP BY EXTRACT(YEAR FROM "DATE") 
+ ORDER BY EXTRACT(YEAR FROM "DATE");
+
 
 --Querry to find the lowest debited in each year
-select extract(year from "DATE") as year,min(cast(withdrawal_amt as number(10,2) default null on conversion error)) as lowest_debited_amount
-from BANK_TRANSACTION
-group by extract(year from "DATE")
-order by year;
+SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
+ EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
+ WHERE WITHDRAWAL_AMT IS NOT NULL
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ GROUP BY EXTRACT(YEAR FROM "DATE") 
+ ORDER BY EXTRACT(YEAR FROM "DATE");
+
 
 --Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
 select count(*) as withdrawal_count
