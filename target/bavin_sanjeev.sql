@@ -2,8 +2,6 @@
 --Describe Table 
 DESC BANK_TRANSACTION;
 
-
-
 --Query to find Highest Amount debited each year 
 
 -- Use the constant in the query
