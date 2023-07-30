@@ -56,18 +56,6 @@ WHERE
 ORDER BY
   year asc;
 
---TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
-SELECT
-  TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
-  EXTRACT(YEAR FROM "DATE") AS year
-FROM
-  BANK_TRANSACTION
-WHERE
-  EXTRACT(YEAR FROM "DATE") = 2018
-  AND WITHDRAWAL_AMT IS NOT NULL
-  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
-ORDER BY
-  withdrawal_amount DESC;
 
 --Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 
 SELECT COUNT(*) AS withdrawal_count
@@ -85,3 +73,16 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
+
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
+SELECT
+  TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
+  EXTRACT(YEAR FROM "DATE") AS year
+FROM
+  BANK_TRANSACTION
+WHERE
+  EXTRACT(YEAR FROM "DATE") = 2018
+  AND WITHDRAWAL_AMT IS NOT NULL
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ORDER BY
+  withdrawal_amount DESC;
