@@ -116,3 +116,4 @@ select * from
 table(dbms_XPLAN.display());
 
 create bitmap index date_index on bank_transaction('DATE');
+--
