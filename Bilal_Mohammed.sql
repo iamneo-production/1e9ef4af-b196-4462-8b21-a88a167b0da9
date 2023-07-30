@@ -53,36 +53,3 @@
    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
    ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY; 
-
-
------PRACTISE WORK FOR ABOVE QUERIES-----
-
-/*1. Query to find Highest Amount debited from the bank 
-       in each year*/
-SELECT EXTRACT(YEAR FROM "DATE") AS YEAR,
-        MAX(CAST(WITHDRAWAL_AMT AS NUMBER(10, 2) DEFAULT NULL ON CONVERSION ERROR)) AS highest_debited_amount 
-FROM bank_transaction 
-GROUP BY EXTRACT(YEAR FROM "DATE")
-ORDER BY YEAR;
-
-/*2. Query to find Lowest amount debited from the bank 
-       in each year*/
-SELECT EXTRACT(YEAR FROM "DATE") AS YEAR,
-        MIN(CAST(WITHDRAWAL_AMT AS NUMBER(10, 2) DEFAULT NULL ON CONVERSION ERROR)) AS lowest_debited_amount 
-FROM bank_transaction 
-GROUP BY EXTRACT(YEAR FROM "DATE")
-ORDER BY YEAR;
-
-/*3. Query to find the 5th Highest Withdrawal amount 
-      at each year*/
-SELECT distinct(year), withdrawal_amt
-FROM(
-  SELECT EXTRACT(YEAR FROM "DATE") AS YEAR,
-         TO_NUMBER(REGEXP_REPLACE(WITHDRAWAL_AMT,'[^0-9.]','')) AS withdrawal_amt,
-         DENSE_RANK() OVER (PARTITION BY EXTRACT(YEAR FROM "DATE")
-                            ORDER BY TO_NUMBER(REGEXP_REPLACE(WITHDRAWAL_AMT,'[^0-9.]','')) DESC) AS rn
-  FROM bank_transaction 
-) subquery
-WHERE rn = 5
-order by year;
-
