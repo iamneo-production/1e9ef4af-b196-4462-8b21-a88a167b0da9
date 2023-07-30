@@ -30,7 +30,7 @@ WITH processed_transactions AS (
     TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
     EXTRACT(YEAR FROM "DATE") AS year
   FROM
-    BANK_TRANSACTION
+    BANK_TRAN
   WHERE
     WITHDRAWAL_AMT IS NOT NULL
     AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
