@@ -1,4 +1,4 @@
--- WORKSPACE QUERIES - BANK_TRANSACTION QUERIES 
+-- WORKSPACE QUERIES BANK_TRANSACTION QUERIES 
 
 --(1). Query to find Highest Amount debited from the bank in each year
 
