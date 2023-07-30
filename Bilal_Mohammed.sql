@@ -86,20 +86,3 @@ FROM(
 WHERE rn = 5
 order by year;
 
-
-/*4. Query to count the withdrawal transactions 
-      between May 5 2018, and March 7 2019*/
-SELECT COUNT(*) AS withdrawal_count
-FROM BANK_TRANSACTION
-WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
-  AND "DATE" <= TO_DATE ('07-Mar-19', 'dd-Mon-yy')
-  AND WITHDRAWAL_AMT IS NOT NULL;
-
-/*5. Query to Find the First five largest Withdrawal transactions are occured 
-      in year 18*/
-SELECT TO_NUMBER(REPLACE(WITHDRAWAL_AMT,'"','')) AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018
-FROM BANK_TRANSACTION WHERE WITHDRAWAL_AMT IS NOT NULL
-AND EXTRACT(YEAR FROM "DATE")=2018
-AND REGEXP_LIKE(REPLACE(WITHDRAWAL_AMT,' ',''),'^[0-9]+(\.[0-9]+)?$')
-ORDER BY TO_NUMBER(REPLACE(WITHDRAWAL_AMT,'"','')) DESC
-OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
