@@ -4,7 +4,6 @@ DESC BANK_TRANSACTION;
 
 --Query to find Highest Amount debited each year 
 
--- Use the constant in the query
 SELECT
   MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT,
   EXTRACT(YEAR FROM "DATE") AS YEAR
