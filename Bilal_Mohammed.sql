@@ -32,13 +32,11 @@
    SELECT YEAR, WITHDRAWAL_AMT AS FIFTH_HIGHEST_WITHDRAWAL_AMT_OF_YEAR FROM FIFTH_HIGH_TRANSACTION 
    WHERE FHT=5 ORDER BY YEAR;
 
-
 --(4). Query to count the withdrawal transactions between May 5 2018, and March 7 2019
 
    SELECT COUNT(WITHDRAWAL_AMT) FROM BANK_TRANSACTION 
    WHERE "DATE" BETWEEN '05-MAY-18' AND '07-MAR-19'
    AND WITHDRAWAL_AMT IS NOT NULL; 
-
 
 --(5). Query to Find the First five largest Withdrawal transactions are occured in year 18
    SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
