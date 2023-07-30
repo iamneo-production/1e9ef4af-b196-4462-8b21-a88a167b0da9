@@ -2,7 +2,6 @@
 select * 
 from BANK_TRANSACTION;
 
-<<<<<<< HEAD:WhiteThunder03.sql
 --Querry to find the highest debited each year
 select extract(year from "DATE") as year,max(cast(withdrawal_amt as number(10,2) default null on conversion error)) as highest_debited_amount
 from BANK_TRANSACTION
@@ -14,10 +13,6 @@ select extract(year from "DATE") as year,min(cast(withdrawal_amt as number(10,2)
 from BANK_TRANSACTION
 group by extract(year from "DATE")
 order by year;
-=======
-/* Describe Table */ 
-DESC BANK_TRANSACTION;
->>>>>>> f748acc20be8310a78e6be6bf892a038f2755089:Bhargav_Pattella.sql
 
 --Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
 select count(*) as withdrawal_count
@@ -79,7 +74,4 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
-<<<<<<< HEAD:WhiteThunder03.sql
 
-=======
->>>>>>> f748acc20be8310a78e6be6bf892a038f2755089:Bhargav_Pattella.sql
