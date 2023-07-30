@@ -103,17 +103,3 @@ AND EXTRACT(YEAR FROM "DATE")=2018
 AND REGEXP_LIKE(REPLACE(WITHDRAWAL_AMT,' ',''),'^[0-9]+(\.[0-9]+)?$')
 ORDER BY TO_NUMBER(REPLACE(WITHDRAWAL_AMT,'"','')) DESC
 OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
-
-/*4 Query to count the withdrawal transactions  
-    between May 5 2018, and March 7 2019 'by using index'*/
-explain plan for
-SELECT COUNT(*) AS withdrawal_count
-FROM BANK_TRANSACTION
-WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
-  AND "DATE" <= TO_DATE ('07-Mar-19', 'dd-Mon-yy')
-  AND WITHDRAWAL_AMT IS NOT NULL;
-select * from 
-table(dbms_XPLAN.display());
-
-create bitmap index date_index on bank_transaction('DATE');
---
