@@ -3,8 +3,7 @@ select * from Bank_Transaction;
 
 /* Describe Table */
 DESC BANK_TRANSACTION;
-            (OR)
-DESCRIBE BANK_TRANSACTION;
+
 
 /* Q1) Query to find highest amount debited each year */
 SELECT EXTRACT(YEAR FROM "DATE") AS YEAR, MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))))
