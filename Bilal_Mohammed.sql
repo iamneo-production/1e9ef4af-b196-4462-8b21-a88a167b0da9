@@ -46,7 +46,6 @@
 
 /*(5). Query to Find the First five largest Withdrawal transactions are occured 
          in year 18*/
-
    SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
    AS FIRST_FIVE_LARGEST_TRANSACTIONS_IN_2018 FROM BANK_TRANSACTION 
    WHERE WITHDRAWAL_AMT IS NOT NULL AND EXTRACT(YEAR FROM "DATE")=2018
