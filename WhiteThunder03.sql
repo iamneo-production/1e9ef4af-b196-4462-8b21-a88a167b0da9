@@ -5,6 +5,7 @@ from BANK_TRANSACTION;
 --trying to get code in sonor
 --trying again
 --Querry to find the highest debited each year
+--test1
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
