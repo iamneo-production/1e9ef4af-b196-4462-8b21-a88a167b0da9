@@ -1,9 +1,10 @@
---retrive all data
-/*select * 
-from BANK_TRANSACTION;*/
+-- Bank_Transaction all queries
 
---trying to get code in sonor
 
+-- Describe Table 
+DESC BANK_TRANSACTION;
+
+-- (1)Query to find Highest Amount debited each year 
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -12,8 +13,8 @@ SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGH
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
+ -- (2)Query to find Lowest Amount debited each year 
 
---Querry to find the lowest debited in each year
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL
@@ -21,16 +22,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
-
---Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
-select count(*) as withdrawal_count
-from BANK_TRANSACTION
-where "DATE" >= to_date('05-May-18', 'dd-Mon-yy')
-    and "DATE" <= to_date('07-Mar-19', 'dd-Mon-yy')
-    and withdrawal_amt is not null;
-
-
---Query to find 5th highest withdrawal each year
+-- (3)query to find 5th highest withdrawal each year 
 WITH processed_transactions AS (
   SELECT
     TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
@@ -59,7 +51,7 @@ WHERE
 ORDER BY
   year asc;
 
---TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
+-- (4) TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
@@ -72,9 +64,14 @@ WHERE
 ORDER BY
   withdrawal_amount DESC;
 
+--(5) Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 
+SELECT COUNT(*) AS withdrawal_count
+FROM bank_transaction
+WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy') 
+  AND "DATE" <= TO_DATE('07-Mar-19', 'dd-Mon-yy')
+  AND WITHDRAWAL_AMT IS NOT NULL;
 
-
---Query to find the first five Largest Transaction Occured in 2018 */
+ -- (6)Query to find the first five Largest Transaction Occured in 2018 
 
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
