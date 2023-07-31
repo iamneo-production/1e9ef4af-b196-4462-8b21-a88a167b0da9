@@ -18,8 +18,8 @@ DESC BANK_TRANSACTION;
          EXTRACT(YEAR FROM "DATE");
 
 /* Q2) Query to find the lowest amount debited each year */
-      SELECT EXTRACT(YEAR FROM "DATE") 
-         AS 
+      SELECT EXTRACT(YEAR FROM "DATE")
+         AS
          YEAR, 
          MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) 
          AS LOWEST_DEBITED_AMOUNT_OF_EVERY_YEAR 
@@ -64,7 +64,7 @@ WITH HIGH_TRANSACTIONS AS(
    
 select withdrawal_amt, "DATE" from bank_transaction ;
  
-/* queries if date column is of date type */
+/* queries if date column is of date type and withdrawal_amt is of number type*/
 
 /* Q1) Query to find highest amount debited each year */
 
@@ -74,5 +74,37 @@ select extract( year from "DATE") year,
    group by extract(year from "DATE") 
    order by extract(year from "DATE");
 
+/* Q2) Query to find the lowest amount debited each year */
 
+
+   select extract(year from "DATE") 
+   as
+      year,
+   min(withdrawal_amt)  
+   as 
+      lowest_debited_amount 
+   from bank_transaction 
+   where 
+      withdrawal_amt != '0' 
+   group by extract(year from "DATE") 
+   order by extract(year from "DATE");
+
+/* Q3) Query to find the 5th highest withdrawal each year */
+
+   select distinct year,
+         withdrawal_amt 
+         from 
+               (select extract(year from "DATE") 
+                        as 
+                        year,
+                        withdrawal_amt,dense_rank() over 
+                              (partition by extract(year from "DATE") 
+                              order by  (case when  withdrawal_amt is not null
+                                             then  withdrawal_amt 
+                                             else 0 end)  
+                              desc ) 
+                        as 
+                        rank 
+         from bank_transaction) 
+         where rank=5;
 
