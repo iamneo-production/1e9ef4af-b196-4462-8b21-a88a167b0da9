@@ -12,9 +12,8 @@ SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGH
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
-
 --Querry to find the lowest debited in each year
-SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
+SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT_IN_YEAR, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), lol)
@@ -23,7 +22,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
 
 
 --Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
-select count(*) as withdrawal_count
+select count(*) as total_withdrawal_count
 from BANK_TRANSACTION
 where "DATE" >= to_date('05-May-18', 'dd-Mon-yy')
     and "DATE" <= to_date('07-Mar-19', 'dd-Mon-yy')
@@ -82,4 +81,3 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), lol)
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
-
