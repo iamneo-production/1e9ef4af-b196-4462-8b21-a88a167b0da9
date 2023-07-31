@@ -49,3 +49,8 @@ WITH HIGH_TRANSACTIONS AS(
    ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY; 
 
+-- Practice work
+
+/* selecting particular columns from table */
+   
+select withdrawal_amt, "DATE" from bank_transaction;
