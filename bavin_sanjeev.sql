@@ -4,7 +4,7 @@ DESC BANK_TRANSACTION;
 --Query to find Highest Amount debited each year 
 
 SELECT
-  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT_OF_THE_YEAR,
+  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT_FOR_EACH_YEARS,
   EXTRACT(YEAR FROM "DATE") AS YEAR
 FROM
   BANK_TRANSACTION
@@ -19,7 +19,7 @@ ORDER BY
 
  -- Query to find Lowest Amount debited each year
 
-SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
+SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT_FOR_EACH_YEAR, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
@@ -29,7 +29,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
 --query to find 5th highest withdrawal each year
 WITH processed_transactions AS (
   SELECT
-    TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
+    TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amounts,
     EXTRACT(YEAR FROM "DATE") AS year
   FROM
     BANK_TRANSACTION
@@ -40,14 +40,14 @@ WITH processed_transactions AS (
 ranked_transactions AS (
   SELECT
     year,
-    withdrawal_amount,
-    ROW_NUMBER() OVER (PARTITION BY year ORDER BY withdrawal_amount DESC) AS rnk
+    withdrawal_amounts,
+    ROW_NUMBER() OVER (PARTITION BY year ORDER BY withdrawal_amounts DESC) AS rnk
   FROM
     processed_transactions
 )
 SELECT
   year,
-  withdrawal_amount AS fifth_highest_withdrawal_amount
+  withdrawal_amounts AS fifth_highest_withdrawal_amount
 FROM
   ranked_transactions
 WHERE
@@ -57,7 +57,7 @@ ORDER BY
 
 
 --Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 
-SELECT COUNT(*) AS withdrawal_count
+SELECT COUNT(*) AS withdrawal_counts
 FROM bank_transaction
 WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy') 
   AND "DATE" <= TO_DATE('07-Mar-19', 'dd-Mon-yy')
