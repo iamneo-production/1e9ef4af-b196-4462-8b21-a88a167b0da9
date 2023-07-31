@@ -3,15 +3,28 @@
 from BANK_TRANSACTION;*/
 
 --trying to get code in sonor
-
-
-SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
- EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
- WHERE WITHDRAWAL_AMT IS NOT NULL
- AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
- GROUP BY EXTRACT(YEAR FROM "DATE") 
- ORDER BY EXTRACT(YEAR FROM "DATE") asc;
-
+desc BANK_TRANSACTION;
+set serveroutput on;
+declare 
+  lio constant varchar(20):= '^[0-9]+(\.[0-9]+)?$';
+  cursor acursor is 
+  SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
+  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
+  WHERE WITHDRAWAL_AMT IS NOT NULL
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), lio)
+  GROUP BY EXTRACT(YEAR FROM "DATE");
+  var BANK_TRANSACTION.WITHDRAWAL_AMT%type;
+  dat number(10);
+BEGIN
+  open acursor;
+    LOOP
+      fetch acursor into var, dat;
+      exit when acursor%notfound;
+      dbms_output.put_line(var||' '||dat);
+    end loop;
+  close acursor;
+END;
+/
 
 --Querry to find the lowest debited in each year
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
