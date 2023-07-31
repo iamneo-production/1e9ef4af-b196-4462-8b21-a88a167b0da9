@@ -1,50 +1,48 @@
-/* Retrieve All Records from Table */
-select * from Bank_Transaction;
+DEFINE VAR=''^[0-9]+(\.[0-9]+)?$'';
+DEFINE VAR;
 
-/* Describe Table */
+-- Describe Table --
 DESC BANK_TRANSACTION;
 
-/* Q1) Query to find highest amount debited each year */
+-- Q1) Query to find highest amount debited each year --
 SELECT EXTRACT(YEAR FROM "DATE") AS YEAR, MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))))
    AS HIGHEST_DEBITED_AMOUNT_OF_EVERY_YEAR FROM BANK_TRANSACTION 
    WHERE WITHDRAWAL_AMT IS NOT NULL
-   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &VAR)
    GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE");
+   ORDER BY EXTRACT(YEAR FROM "DATE") ASC;
 
-/* Q2) Query to find the lowest amount debited each year */
+-- Q2) Query to find the lowest amount debited each year --
 SELECT EXTRACT(YEAR FROM "DATE") AS YEAR, MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) 
    AS LOWEST_DEBITED_AMOUNT_OF_EVERY_YEAR FROM BANK_TRANSACTION 
    WHERE WITHDRAWAL_AMT IS NOT NULL
-   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &VAR)
    GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE"); 
+   ORDER BY EXTRACT(YEAR FROM "DATE") ASC; 
 
-
-/* Q3) Query to find the 5th highest withdrawal each year */
+-- Q3) Query to find the 5th highest withdrawal each year --
 WITH HIGH_TRANSACTIONS AS(
       SELECT TO_NUMBER(TRIM(' ' FROM REPLACE(WITHDRAWAL_AMT, '"',''))) AS WITHDRAWAL_AMT, 
       EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION WHERE WITHDRAWAL_AMT IS NOT NULL AND 
-      REGEXP_LIKE(TRIM(' ' FROM REPLACE(WITHDRAWAL_AMT, '"','')), '^[0-9]+(\.[0-9]+)?$')
+      REGEXP_LIKE(TRIM(' ' FROM REPLACE(WITHDRAWAL_AMT, '"','')), &VAR)
    ), 
    FIFTH_HIGH_TRANSACTION AS (
       SELECT YEAR, WITHDRAWAL_AMT, ROW_NUMBER() OVER (PARTITION BY YEAR ORDER BY WITHDRAWAL_AMT DESC) AS FHT 
       FROM HIGH_TRANSACTIONS
    ) 
    SELECT YEAR, WITHDRAWAL_AMT AS FIFTH_HIGHEST_WITHDRAWAL_AMT_OF_YEAR FROM FIFTH_HIGH_TRANSACTION 
-   WHERE FHT=5 ORDER BY YEAR;
+   WHERE FHT=5 ORDER BY YEAR ASC;
 
-
-/* Q4) Query to count the no of withdrawal transactions done between 5-may-2018 and 7-mar-2019 */
+-- Q4) Query to count the no of withdrawal transactions done between 5-may-2018 and 7-mar-2019 --
      SELECT COUNT(WITHDRAWAL_AMT) AS TOTAL_WITHDRAWAL_AMOUNT FROM BANK_TRANSACTION 
    WHERE "DATE" BETWEEN '05-MAY-18' AND '07-MAR-19'
    AND WITHDRAWAL_AMT IS NOT NULL; 
 
-/* Q5) Query to find the first five largest withdrawal transactions occured in the year 2018 */
+-- Q5) Query to find the first five largest withdrawal transactions occured in the year 2018 --
 
    SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
    AS FIRST_FIVE_LARGEST_TRANSACTIONS_OCCURED_IN_2018 FROM BANK_TRANSACTION 
    WHERE WITHDRAWAL_AMT IS NOT NULL AND EXTRACT(YEAR FROM "DATE")=2018
-   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &VAR)
    ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
-   OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY; 
+   OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
