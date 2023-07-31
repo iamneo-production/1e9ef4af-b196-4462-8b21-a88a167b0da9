@@ -22,11 +22,8 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
--- (3)query to find 5th highest withdrawal each year 
+-- query to find the fifth highest withdrawl amount of each year
 WITH processed_transactions AS (
-  SELECT
-    TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
-    EXTRACT(YEAR FROM "DATE") AS year
   FROM
     BANK_TRANSACTION
   WHERE
@@ -51,11 +48,9 @@ WHERE
 ORDER BY
   year asc;
 
--- (4) TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
+ 
+--(4) TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
 SELECT
-  TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
-  EXTRACT(YEAR FROM "DATE") AS year
-FROM
   BANK_TRANSACTION
 WHERE
   EXTRACT(YEAR FROM "DATE") = 2018
@@ -71,8 +66,9 @@ WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
   AND "DATE" <= TO_DATE('07-Mar-19', 'dd-Mon-yy')
   AND WITHDRAWAL_AMT IS NOT NULL;
 
- -- (6)Query to find the first five Largest Transaction Occured in 2018 
 
+ -- (6)Query to find the first five Largest Transaction Occured in 2018
+  
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
  WHERE WITHDRAWAL_AMT IS NOT NULL AND EXTRACT(YEAR FROM "DATE")=2018
