@@ -5,20 +5,29 @@ select * from Bank_Transaction;
 DESC BANK_TRANSACTION;
 
 /* Q1) Query to find highest amount debited each year */
-SELECT EXTRACT(YEAR FROM "DATE") AS YEAR, MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))))
-   as HIGHEST_DEBITED_AMOUNT_OF_EVERY_YEAR FROM BANK_TRANSACTION 
-   WHERE WITHDRAWAL_AMT IS NOT NULL
-   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
-   GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE");
+   SELECT EXTRACT(YEAR FROM "DATE") AS YEAR,
+         MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))))
+         as 
+         HIGHEST_DEBITED_AMOUNT_OF_EVERY_YEAR 
+         FROM BANK_TRANSACTION 
+         WHERE WITHDRAWAL_AMT IS NOT NULL
+         AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+         GROUP BY 
+         EXTRACT(YEAR FROM "DATE") 
+         ORDER BY 
+         EXTRACT(YEAR FROM "DATE");
 
 /* Q2) Query to find the lowest amount debited each year */
-SELECT EXTRACT(YEAR FROM "DATE") AS YEAR, MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) 
-   AS LOWEST_DEBITED_AMOUNT_OF_EVERY_YEAR FROM BANK_TRANSACTION 
-   WHERE WITHDRAWAL_AMT IS NOT NULL
-   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
-   GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE"); 
+      SELECT EXTRACT(YEAR FROM "DATE") 
+         AS 
+         YEAR, 
+         MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) 
+         AS LOWEST_DEBITED_AMOUNT_OF_EVERY_YEAR 
+         FROM BANK_TRANSACTION 
+         WHERE WITHDRAWAL_AMT IS NOT NULL
+         AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+         GROUP BY EXTRACT(YEAR FROM "DATE") 
+         ORDER BY EXTRACT(YEAR FROM "DATE"); 
 
 
 /* Q3) Query to find the 5th highest withdrawal each year */
@@ -53,4 +62,17 @@ WITH HIGH_TRANSACTIONS AS(
 
 /* selecting particular columns from table */
    
-select withdrawal_amt, "DATE" from bank_transaction;
+select withdrawal_amt, "DATE" from bank_transaction ;
+ 
+/* queries if date column is of date type */
+
+/* Q1) Query to find highest amount debited each year */
+
+select extract( year from "DATE") year,
+       max(withdrawal_amt)  as highest_debited_amount 
+   from bank_transaction 
+   group by extract(year from "DATE") 
+   order by extract(year from "DATE");
+
+
+
