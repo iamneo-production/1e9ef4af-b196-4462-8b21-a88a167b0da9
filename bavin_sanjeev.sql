@@ -4,7 +4,7 @@ DESC BANK_TRANSACTION;
 --Query to find Highest Amount debited each year 
 
 SELECT
-  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT,
+  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT_OF_THE_YEAR,
   EXTRACT(YEAR FROM "DATE") AS YEAR
 FROM
   BANK_TRANSACTION
@@ -17,7 +17,7 @@ ORDER BY
   EXTRACT(YEAR FROM "DATE") ASC;
 
 
- -- Query to find Lowest Amount debited each year 
+ -- Query to find Lowest Amount debited each year
 
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -26,7 +26,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
---query to find 5th highest withdrawal each year 
+--query to find 5th highest withdrawal each year
 WITH processed_transactions AS (
   SELECT
     TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
