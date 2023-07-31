@@ -80,3 +80,4 @@ WHERE
   AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
 ORDER BY
   withdrawal_amount DESC;
+  
