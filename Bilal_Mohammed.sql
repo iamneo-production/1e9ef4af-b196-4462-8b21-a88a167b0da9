@@ -7,7 +7,7 @@
    WHERE WITHDRAWAL_AMT IS NOT NULL
    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
    GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE");
+   ORDER BY EXTRACT(YEAR FROM "DATE") ASC; 
 
 --(2). Query to find Lowest amount debited from the bank in each year
 
@@ -16,7 +16,7 @@
    WHERE WITHDRAWAL_AMT IS NOT NULL
    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
    GROUP BY EXTRACT(YEAR FROM "DATE") 
-   ORDER BY EXTRACT(YEAR FROM "DATE"); 
+   ORDER BY EXTRACT(YEAR FROM "DATE") ASC; 
 
 --(3). Query to find the 5th Highest Withdrawal amount at each year
 
@@ -30,7 +30,7 @@
       FROM HIGH_TRANSACTIONS
    ) 
    SELECT YEAR, WITHDRAWAL_AMT AS FIFTH_HIGHEST_WITHDRAWAL_AMT_OF_YEAR FROM FIFTH_HIGH_TRANSACTION 
-   WHERE FHT=5 ORDER BY YEAR;
+   WHERE FHT=5 ORDER BY YEAR ASC;
 
 --(4). Query to count the withdrawal transactions between May 5 2018, and March 7 2019
 
