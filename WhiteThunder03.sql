@@ -59,7 +59,7 @@ WHERE
 ORDER BY
   year;
 
-/* TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
@@ -74,7 +74,7 @@ ORDER BY
 
 
 
-/* Query to find the first five Largest Transaction Occured in 2018 */
+--Query to find the first five Largest Transaction Occured in 2018 */
 
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
