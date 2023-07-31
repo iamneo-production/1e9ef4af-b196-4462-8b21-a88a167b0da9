@@ -74,7 +74,7 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
 
---TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate result 
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
