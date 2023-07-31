@@ -1,6 +1,6 @@
 
-define var = ''^[0-9]+(\.[0-9]+)?$'';
-define var;
+define rec = ''^[0-9]+(\.[0-9]+)?$'';
+define rec;
 --Query to find Highest Amount debited each years 
 
 --Query to find Highest Amount debited each year 
@@ -37,7 +37,7 @@ WITH processed_transactions AS (
     BANK_TRANSACTION
   WHERE
     WITHDRAWAL_AMT IS NOT NULL
-    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &var)
+    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &rec)
   GROUP BY
     EXTRACT(YEAR FROM "DATE")
   ORDER BY
@@ -49,7 +49,7 @@ WITH processed_transactions AS (
   SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT_FOR_EACH_YEAR, 
   EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
   WHERE WITHDRAWAL_AMT IS NOT NULL
-  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &var)
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &rec)
   GROUP BY EXTRACT(YEAR FROM "DATE") 
   ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
@@ -62,7 +62,7 @@ WITH processed_transactions AS (
       BANK_TRANSACTION
     WHERE
       WITHDRAWAL_AMT IS NOT NULL
-      AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &var)
+      AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &rec)
   ),
   ranked_transactions AS (
     SELECT
@@ -102,7 +102,7 @@ WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
   SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
   AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_THE_2018 FROM BANK_TRANSACTION 
     WHERE WITHDRAWAL_AMT IS NOT NULL AND EXTRACT(YEAR FROM "DATE")=2018
-    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &var)
+    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &rec)
   ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
   OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
@@ -116,7 +116,7 @@ WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy')
   WHERE
     EXTRACT(YEAR FROM "DATE") = 2018
     AND WITHDRAWAL_AMT IS NOT NULL
-    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &var)
+    AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), &rec)
   ORDER BY
     withdrawal_amounts DESC;
 
