@@ -1,6 +1,6 @@
 --retrive all data
-select * 
-from BANK_TRANSACTION;
+/*select * 
+from BANK_TRANSACTION;*/
 
 --trying to get code in sonor
 
@@ -57,7 +57,7 @@ FROM
 WHERE
   rnk = 5
 ORDER BY
-  year;
+  year asc;
 
 --TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
 SELECT
