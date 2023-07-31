@@ -3,6 +3,7 @@ select *
 from BANK_TRANSACTION;
 
 --trying to get code in sonor
+--trying again
 --Querry to find the highest debited each year
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
