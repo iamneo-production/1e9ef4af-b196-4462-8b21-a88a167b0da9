@@ -1,10 +1,9 @@
 --retrive all data
-select * 
-from BANK_TRANSACTION;
+/*select * 
+from BANK_TRANSACTION;*/
 
 --trying to get code in sonor
---trying again
---Querry to find the highest debited each year
+
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -58,9 +57,9 @@ FROM
 WHERE
   rnk = 5
 ORDER BY
-  year;
+  year asc;
 
-/* TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
@@ -75,7 +74,7 @@ ORDER BY
 
 
 
-/* Query to find the first five Largest Transaction Occured in 2018 */
+--Query to find the first five Largest Transaction Occured in 2018 */
 
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
