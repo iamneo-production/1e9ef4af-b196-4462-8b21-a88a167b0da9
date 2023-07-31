@@ -1,14 +1,7 @@
-
---Describe Table 
-DESC BANK_TRANSACTION;
-
-
-
 --Query to find Highest Amount debited each year 
 
--- Use the constant in the query
 SELECT
-  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT,
+  MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT_OF_THE_YEAR,
   EXTRACT(YEAR FROM "DATE") AS YEAR
 FROM
   BANK_TRANSACTION
@@ -20,8 +13,7 @@ GROUP BY
 ORDER BY
   EXTRACT(YEAR FROM "DATE") ASC;
 
-
- -- Query to find Lowest Amount debited each year 
+ -- Query to find Lowest Amount debited each year
 
 SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
  EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
@@ -30,7 +22,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  GROUP BY EXTRACT(YEAR FROM "DATE") 
  ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
---query to find 5th highest withdrawal each year 
+--query to find 5th highest withdrawal each year
 WITH processed_transactions AS (
   SELECT
     TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
@@ -59,20 +51,8 @@ WHERE
 ORDER BY
   year asc;
 
---TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
-SELECT
-  TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
-  EXTRACT(YEAR FROM "DATE") AS year
-FROM
-  BANK_TRANSACTION
-WHERE
-  EXTRACT(YEAR FROM "DATE") = 2018
-  AND WITHDRAWAL_AMT IS NOT NULL
-  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
-ORDER BY
-  withdrawal_amount DESC;
-
 --Query to find Count the Withdrawal Transaction between 5-May-2018 and 7-Mar-2019 
+
 SELECT COUNT(*) AS withdrawal_count
 FROM bank_transaction
 WHERE "DATE" >= TO_DATE('05-May-18', 'dd-Mon-yy') 
@@ -88,3 +68,16 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results 
+SELECT
+  TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
+  EXTRACT(YEAR FROM "DATE") AS year
+FROM
+  BANK_TRANSACTION
+WHERE
+  EXTRACT(YEAR FROM "DATE") = 2018
+  AND WITHDRAWAL_AMT IS NOT NULL
+  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ORDER BY
+  withdrawal_amount DESC;
+  
