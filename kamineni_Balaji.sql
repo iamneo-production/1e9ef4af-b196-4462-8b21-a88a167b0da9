@@ -58,53 +58,6 @@ WITH HIGH_TRANSACTIONS AS(
    ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
    OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY; 
 
--- Practice work
 
-/* selecting particular columns from table */
+
    
-select withdrawal_amt, "DATE" from bank_transaction ;
- 
-/* queries if date column is of date type and withdrawal_amt is of number type*/
-
-/* Q1) Query to find highest amount debited each year */
-
-select extract( year from "DATE") year,
-       max(withdrawal_amt)  as highest_debited_amount 
-   from bank_transaction 
-   group by extract(year from "DATE") 
-   order by extract(year from "DATE");
-
-/* Q2) Query to find the lowest amount debited each year */
-
-
-   select extract(year from "DATE") 
-   as
-      year,
-   min(withdrawal_amt)  
-   as 
-      lowest_debited_amount 
-   from bank_transaction 
-   where 
-      withdrawal_amt != '0' 
-   group by extract(year from "DATE") 
-   order by extract(year from "DATE");
-
-/* Q3) Query to find the 5th highest withdrawal each year */
-
-   select distinct year,
-         withdrawal_amt 
-         from 
-               (select extract(year from "DATE") 
-                        as 
-                        year,
-                        withdrawal_amt,dense_rank() over 
-                              (partition by extract(year from "DATE") 
-                              order by  (case when  withdrawal_amt is not null
-                                             then  withdrawal_amt 
-                                             else 0 end)  
-                              desc ) 
-                        as 
-                        rank 
-         from bank_transaction) 
-         where rank=5;
-
