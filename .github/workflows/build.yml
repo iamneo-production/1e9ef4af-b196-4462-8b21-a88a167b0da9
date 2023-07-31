@@ -24,7 +24,3 @@ jobs:
         env:
           GITHUB_TOKEN: 1e9ef4af-b196-4462-8b21-a88a167b0da9
           SONAR_TOKEN: 811c9a490983734401ba4e491eaefc8bfa7281de
-        run: >-
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-          -Dsonar.projectKey=iamneo-production_1e9ef4af-b196-4462-8b21-a88a167b0da9
-          -Dsonar.login=811c9a490983734401ba4e491eaefc8bfa7281de
