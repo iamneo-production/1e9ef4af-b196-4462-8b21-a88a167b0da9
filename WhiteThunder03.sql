@@ -2,6 +2,7 @@
 select * 
 from BANK_TRANSACTION;
 
+--trying to get code in sonor
 --Querry to find the highest debited each year
 
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
@@ -9,7 +10,7 @@ SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGH
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  GROUP BY EXTRACT(YEAR FROM "DATE") 
- ORDER BY EXTRACT(YEAR FROM "DATE");
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
 
 --Querry to find the lowest debited in each year
@@ -18,7 +19,7 @@ SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWE
  WHERE WITHDRAWAL_AMT IS NOT NULL
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  GROUP BY EXTRACT(YEAR FROM "DATE") 
- ORDER BY EXTRACT(YEAR FROM "DATE");
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
 
 
 --Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
