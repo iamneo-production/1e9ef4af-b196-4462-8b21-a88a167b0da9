@@ -3,6 +3,7 @@
 from BANK_TRANSACTION;*/
 
 --trying to get code in sonor
+--Querry to find the highest debited in each year
 define lol=''^[0-9]+(\.[0-9]+)?$'';
 define lol;
 SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
