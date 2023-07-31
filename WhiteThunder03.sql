@@ -1,23 +1,26 @@
 --retrive all data
-select * 
-from BANK_TRANSACTION;
+/*select * 
+from BANK_TRANSACTION;*/
 
-<<<<<<< HEAD:WhiteThunder03.sql
---Querry to find the highest debited each year
-select extract(year from "DATE") as year,max(cast(withdrawal_amt as number(10,2) default null on conversion error)) as highest_debited_amount
-from BANK_TRANSACTION
-group by extract(year from "DATE")
-order by year;
+--trying to get code in sonor
+
+
+SELECT MAX(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS HIGHEST_DEPOSITED_AMOUNT, 
+ EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
+ WHERE WITHDRAWAL_AMT IS NOT NULL
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ GROUP BY EXTRACT(YEAR FROM "DATE") 
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
+
 
 --Querry to find the lowest debited in each year
-select extract(year from "DATE") as year,min(cast(withdrawal_amt as number(10,2) default null on conversion error)) as lowest_debited_amount
-from BANK_TRANSACTION
-group by extract(year from "DATE")
-order by year;
-=======
-/* Describe Table */ 
-DESC BANK_TRANSACTION;
->>>>>>> f748acc20be8310a78e6be6bf892a038f2755089:Bhargav_Pattella.sql
+SELECT MIN(TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))) AS LOWEST_DEPOSITED_AMOUNT, 
+ EXTRACT(YEAR FROM "DATE") AS YEAR FROM BANK_TRANSACTION 
+ WHERE WITHDRAWAL_AMT IS NOT NULL
+ AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
+ GROUP BY EXTRACT(YEAR FROM "DATE") 
+ ORDER BY EXTRACT(YEAR FROM "DATE") asc;
+
 
 --Query to find count of the withdrawal transaction between 5-May-2018 and 7-Mar-2019
 select count(*) as withdrawal_count
@@ -54,9 +57,9 @@ FROM
 WHERE
   rnk = 5
 ORDER BY
-  year;
+  year asc;
 
-/* TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
+--TO check the output is individually correct and to evaluvate we use this year by year and identify accurate results */
 SELECT
   TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) AS withdrawal_amount,
   EXTRACT(YEAR FROM "DATE") AS year
@@ -71,7 +74,7 @@ ORDER BY
 
 
 
-/* Query to find the first five Largest Transaction Occured in 2018 */
+--Query to find the first five Largest Transaction Occured in 2018 */
 
 SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) 
  AS FIRST_FIVE_HIGHEST_DEPOSITED_AMOUNT_IN_2018 FROM BANK_TRANSACTION 
@@ -79,7 +82,3 @@ SELECT TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))))
  AND REGEXP_LIKE(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', ''))), '^[0-9]+(\.[0-9]+)?$')
  ORDER BY TO_NUMBER(TRIM(' ' FROM (REPLACE(WITHDRAWAL_AMT, '"', '')))) DESC
  OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
-<<<<<<< HEAD:WhiteThunder03.sql
-
-=======
->>>>>>> f748acc20be8310a78e6be6bf892a038f2755089:Bhargav_Pattella.sql
