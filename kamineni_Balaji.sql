@@ -90,7 +90,7 @@ ORDER BY
 
 /* MY PRACTICE WORK TO GET THE ABOVE WORKSPACE QUERIES */ 
 
-/* Also, the queries below are written by considering "DATE" column is if date data type
+/* The queries below are written by considering "DATE" column is if date data type
 and withdrawal_amount if of number type*/
 
 --Query to find Highest Amount debited each year
